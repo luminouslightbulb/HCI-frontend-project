@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+*{ margin:0; padding:0; 
+  box-sizing:border-box; 
+  font-family:Arial,sans-serif; }
+
+body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+    }
+.navbar{
+  width:100%;
+  height:70px;
+  background:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+.logo{
+  font-size:24px;
+  font-weight:bold;
+  color:#1dbf73;
+}
+h1{
+    font-size:50px;
+    margin-left:870px;
+}
+.username-title,.email-title,.password1-label,.password2-label,.submit{
+    font-size:15px;
+    padding-top:10px;
+}
+.to-login{
+    font-size:13px;
+}
+.input-email,.input-username,.input-password1,.input-password2{
+    height:30px;
+    width:100%;
+    padding-bottom:30px;
+    border-radius:10px;
+    margin-bottom:20px;
+    border:1px solid #ddd; 
+    outline:none;
+   
+}
+.form{
+    padding-left:120px;
+    padding-right:120px;
+    background: white;
+    margin-left:700px;
+    margin-right:700px;
+    border-radius:15px;
+}
+.btn{ 
+  background:#1dbf73; 
+  color:white; 
+  border:none; 
+  padding:13px 25px; 
+  border-radius:10px; 
+  cursor:pointer; 
+  font-size:14px; 
+  transition:0.3s; 
+  width:100%;
+  margin-bottom:20px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+    <div class="logo">MEDTEX</div>
+  </div>
+  <div class="main">
+    <h1>Masuk</h1>
+    <div class="form">
+        <div class="username-title">Masukkan Username</div>
+        <input type="text" class="input-username">
+        <div class="password1-label">Masukkan Password</div>
+        <input type="password" class="input-password1">
+        <div class="to-login">Belum punya akun? <a href="sign_up.html">Daftar sekarang</a></div>
+        <div class="submit">
+        <a href="main_page.html"><input type="submit" value="Masuk" class="btn"></a></div>
+    </div>
+  </div>
+</body>
+</html>

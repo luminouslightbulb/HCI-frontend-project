@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{ margin:0; padding:0; 
+  box-sizing:border-box; 
+  font-family:Arial,sans-serif; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+    }
+
+    .navbar{
+  width:100%;
+  height:70px;
+  background:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+    .logo{
+  font-size:24px;
+  font-weight:bold;
+  color:#1dbf73;
+}
+
+    .search {
+      width: 300px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar{
+  width:240px;
+  height:calc(100vh - 70px);
+  background:white;
+  padding:25px;
+  box-shadow:2px 0 5px rgba(0,0,0,0.03);
+}
+
+.menu{
+  padding:14px;
+  border-radius:10px;
+  margin-bottom:12px;
+  cursor:pointer;
+  transition:0.3s;
+  color:#555;
+}
+
+.menu:hover{
+  background:#1dbf73;
+  color:white;
+}
+
+.active{
+  background:#1dbf73;
+  color:white;
+}
+
+.main{
+  flex:1;
+  padding:35px;
+}
+.icon-caridokter{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-dashboard{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-booking{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-chat{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-riwayat{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-fasilitas{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-checker{
+      width:30px;
+      height:30px;
+      padding-left:10px;
+    }
+    .help-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .help-1, .help-2, .help-3, .help-4, .help-5, .help-6 .help-7 .help-8{
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .title-1, .title-2, .title-3, .title-4, .title-5, .title-6 .title-7 .title-8{
+      padding: 18px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .title-1:hover, .title-2:hover, .title-3:hover, .title-4:hover, .title-5:hover, .title-6:hover ,.title-7:hover ,.title-8:hover{
+      background: #f9fbf9;
+    }
+    .title-1::after, .title-2::after, .title-3::after, .title-4::after, .title-5::after, .title-6::after ,.title-7::after,.title-8::after{
+      content: '▼';
+      font-size: 12px;
+      color: #1dbf73;
+      transition: transform 0.3s;
+    }
+    .active-row::after {
+      transform: rotate(180deg);
+    }
+    .explanation-1, .explanation-2, .explanation-3, .explanation-4, .explanation-5, .explanation-6,.explanation-7,.explanation-8 {
+      max-height: 0;
+      padding: 0 20px;
+      overflow: hidden;
+      color: #666;
+      font-size: 20px;
+      line-height: 1.6;
+      transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+      border-top: 1px solid transparent;
+    }
+    .show-content {
+      max-height: 200px;
+      padding: 15px 20px 20px 20px;
+      border-top: 1px solid #edf2f0;
+    }
+    #sidebar-text{
+      color:black;
+      text-decoration:none;
+    }
+    #pfp{
+      width:20px;
+      height:20px;
+    }
+    .icon-caridokter{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-dashboard{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-booking{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-chat{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-riwayat{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-fasilitas{
+      width:35px;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-checker{
+      width:30px;
+      height:30px;
+      padding-left:10px;
+    }
+    #sidebar-text{
+      color:black;
+      text-decoration:none;
+    }
+
+
+</style>
+<body>
+  <div class="navbar">
+    <div class="logo">MEDTEX</div>
+    <div><img src="profile-icon-9.png" alt="pfp" id="pfp">User</div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+    <div class="menu"><a href="main_page.html" id="sidebar-text">Dashboard<img src="dashboard.png" alt="Dashboard" class="icon-dashboard"></a></div>
+    <div class="menu"><a href="cariDokter.html" id="sidebar-text">Cari Dokter <img src="magnifying_glass.png" alt="caridokter" class="icon-caridokter"></a></div>
+    <div class="menu"><a href="booking.html" id="sidebar-text">Booking<img src="booking.png" alt="booking" class="icon-booking"></a></div>
+    <div class="menu"><a href="chat.html" id="sidebar-text">Chat<img src="chat.png" alt="chat" class="icon-chat"></a></div>
+    <div class="menu"><a href="Riwayat.html" id="sidebar-text">Riwayat<img src="riwayat.png" alt="riwayat" class="icon-riwayat"></a></div>
+    <div class="menu"><a href="fasilitas.html" id="sidebar-text">Fasilitas<img src="fasilitas.png" alt="fasilitas" class="icon-fasilitas"></a></div>
+    <div class="menu"><a href="symptom checker.html" id="sidebar-text">symptom checker<img src="checker.png" alt="symptom" class="icon-checker"></a></div>
+    <div class="menu active"><a href="#" id="sidebar-text">Bantuan<img src="question-mark.png" alt="symptom" class="icon-checker"></a></div>
+
+  </div>
+
+    <div class="main">
+      <div style="font-size: 28px; font-weight: bold; margin-bottom: 5px;">Halaman Bantuan Medtex</div>
+      <p style="color: #777; margin-bottom: 25px;">Klik pada kategori topik di bawah ini untuk melihat penjelasan detail.</p>
+      
+      <div class="help-container">
+        <div class="help-1">
+          <div class="title-1" onclick="toggleRow(this, 'explanation-1')">Dashboard</div>
+          <div class="explanation-1">Halaman Dashboard adalah halaman utama aplikasi Medtex. Pada halaman ini terdapat rangkuman singkat mengenai aktivitas medis pengguna, jadwal konsultasi terdekat, serta akses cepat ke berbagai fitur utama lainnya.</div>
+        </div>
+
+        <div class="help-2">
+          <div class="title-2" onclick="toggleRow(this, 'explanation-2')">Cari Dokter</div>
+          <div class="explanation-2">Halaman Cari Dokter digunakan untuk mencari dokter yang sesuai dengan kebutuhan pengguna. Pencarian dapat dilakukan menggunakan search bar atau pun filtering yang disediakan. Pengguna dapat memfilter dokter berdasarkan bidang mereka atau pun lokasi mereka.</div>
+        </div>
+
+        <div class="help-3">
+          <div class="title-3" onclick="toggleRow(this, 'explanation-3')">Booking</div>
+          <div class="explanation-3">Halaman Booking adalah halaman dimana pengguna dapat membooking konsultasi dengan sebuah dokter, booking dapat dilakukan dengan mengisi forum booking dengan info yang diminta yaitu nama dokter, tanggal konsultasi, tipe konsultasi, dan juga jam konsultasi.</div>
+        </div>
+
+        <div class="help-4">
+          <div class="title-4" onclick="toggleRow(this, 'explanation-4')">Chat</div>
+          <div class="explanation-4">Halaman Chat adalah halaman dimana pengguna dapat chatting dengan seorang dokter mengenai berbagai hal yang berkaitan dengan kesehatan.</div>
+        </div>
+
+        <div class="help-5">
+          <div class="title-5" onclick="toggleRow(this, 'explanation-5')">Riwayat</div>
+          <div class="explanation-5">Halaman Riwayat adalah halaman dimana pengguna dapat melihat riwayat dari konsultasi mereka, diagnosa mereka, resep yang diberi dokter, serta rangkuman dari konsultasi.</div>
+        </div>
+
+        <div class="help-5">
+          <div class="title-5" onclick="toggleRow(this, 'explanation-6')">Fasilitas</div>
+          <div class="explanation-5">Halaman Fasilitas adalah halaman dimana pengguna dapat mencari fasilitas seperti klinik atau rumah sakit yang sesuai dengan kebutuhan mereka. Pencarian juga dapat dilakukan oleh search bar dan filtering. Filtering dapat dilakukan berdasarkan rating, jarak, tipe, dan lokasi.</div>
+        </div>
+        <div class="help-5">
+          <div class="title-5" onclick="toggleRow(this, 'explanation-7')">Symptom checker</div>
+          <div class="explanation-5">Halaman Symptom checker adalah halaman dimana pengguna dapat mencentang gejala-gejala yang mereka alami, dan penggun akan diberi rekomendasi spesialis yang dapat dikonsultasi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleRow(titleElement, targetClass) {
+      const content = titleElement.nextElementSibling;
+      titleElement.classList.toggle('active-row');
+      
+      if (content.classList.contains('show-content')) {
+        content.classList.remove('show-content');
+      } else {
+        content.classList.add('show-content');
+      }
+    }
+  </script>
+</body>
+</html>

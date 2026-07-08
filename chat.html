@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>MEDTEX - Chat</title>
+<style>
+*{ 
+  margin:0; 
+  padding:0; 
+  box-sizing:border-box; 
+  font-family:Arial,sans-serif; 
+}
+body{ 
+  background:#f5f7f6; 
+}
+
+.navbar{ 
+  height:70px; 
+  background:white; 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  padding:0 40px; 
+  box-shadow:0 2px 8px rgba(0,0,0,0.05); 
+}
+.logo{ 
+  font-size:24px; 
+  font-weight:bold; 
+  color:#1dbf73; 
+}
+.user{ 
+  font-size:15px; 
+  color:#555; 
+}
+
+.container{ 
+  display:flex; 
+}
+
+.sidebar{ 
+  width:240px; 
+  height:calc(100vh - 70px); 
+  background:white; 
+  padding:25px; 
+  box-shadow:2px 0 5px rgba(0,0,0,0.03); 
+}
+.menu{ 
+  padding:14px; 
+  border-radius:10px; 
+  margin-bottom:12px; 
+  cursor:pointer; 
+  transition:0.3s; 
+  color:#555; 
+}
+.menu:hover{ 
+  background:#1dbf73; 
+  color:white; 
+}
+.active{ 
+  background:#1dbf73; 
+  color:white; 
+}
+
+.main{ 
+  flex:1; 
+  padding:35px; 
+  display:flex; 
+  gap:25px; 
+  height:calc(100vh - 70px); 
+}
+
+
+.list-panel{ 
+  width:260px; 
+  background:white; 
+  border-radius:15px; 
+  box-shadow:0 2px 5px rgba(0,0,0,0.05); 
+  overflow-y:auto; 
+}
+.list-title{ 
+  font-size:18px; 
+  font-weight:bold; 
+  padding:20px; 
+  border-bottom:1px solid #f0f0f0; 
+}
+.doc-item{ 
+  display:flex; 
+  align-items:center; 
+  gap:12px; 
+  padding:15px 20px; 
+  cursor:pointer; 
+  border-bottom:1px solid #f7f7f7;
+   transition:0.2s; 
+}
+.doc-item:hover{ 
+  background:#f5f7f6; 
+}
+.doc-item.selected{ 
+  background:#e8f8f1; 
+  border-left:3px solid #1dbf73; 
+}
+.avatar{ 
+  width:44px; 
+  height:44px; 
+  border-radius:50%; 
+  background:#e8f8f1; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  font-weight:bold; 
+  color:#1dbf73; 
+}
+.doc-name{ 
+  font-size:14px; 
+  font-weight:bold; 
+}
+.doc-spec{ 
+  font-size:12px; 
+  color:#888; 
+}
+
+
+.chat-window{ 
+  flex:1; 
+  background:white; 
+  border-radius:15px; 
+  box-shadow:0 2px 5px rgba(0,0,0,0.05); 
+  display:flex; 
+  flex-direction:column; 
+  overflow:hidden; 
+}
+.chat-header{ 
+  padding:18px 25px;
+  border-bottom:1px solid #f0f0f0;
+   display:flex;
+  align-items:center; 
+  gap:12px;
+ }
+.header-name{ 
+  font-size:17px;
+  font-weight:bold; 
+}
+.header-status{ 
+  font-size:13px; 
+  color:#1dbf73; 
+}
+
+.chat-body{ 
+  flex:1; 
+  overflow-y:auto; 
+  padding:25px; 
+  display:flex; 
+  flex-direction:column; 
+  gap:15px; 
+  background:#f9fbfa; 
+}
+.msg-row{ 
+  display:flex; 
+  gap:10px; 
+  align-items:flex-end; 
+}
+.msg-row.me{ 
+  flex-direction:row-reverse; 
+}
+.bubble{ 
+  padding:12px 16px;
+  border-radius:15px; 
+  font-size:14px; 
+  line-height:1.6; 
+  background:white; 
+  border:1px solid #eee; 
+  max-width:60%; 
+}
+.msg-row.me .bubble{ 
+  background:#1dbf73;
+   color:white;
+    border:none; 
+  }
+.msg-time{ 
+  font-size:11px;
+   color:#bbb; 
+  }
+
+.chat-footer{ 
+  padding:15px 25px; 
+  border-top:1px solid #f0f0f0; 
+  display:flex; 
+  gap:10px; 
+}
+.msg-input{ 
+  flex:1; 
+  padding:12px 18px; 
+  border:1px solid #ddd; 
+  border-radius:25px; 
+  font-size:14px; 
+  outline:none; 
+}
+.msg-input:focus{ 
+  border-color:#1dbf73; 
+}
+.btn{ 
+  background:#1dbf73;
+  color:white;
+  border:none;
+  padding:12px 22px; 
+  border-radius:25px; 
+  cursor:pointer; 
+  font-size:14px; 
+}
+.btn:hover{ 
+  background:#18a966;
+}
+#pfp{ 
+  width:20px; 
+  height:20px; 
+  }
+.icon-caridokter{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-dashboard{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-booking{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-chat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-riwayat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-fasilitas{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-checker{
+      width:30;
+      height:30px;
+      padding-left:10px;
+    }
+    #sidebar-text{
+      color:black;
+      text-decoration:none;
+    }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">MEDTEX</div>
+  <div><img src="profile-icon-9.png" alt="pfp" id="pfp">User</div>
+</div>
+
+<div class="container">
+
+  <div class="sidebar">
+    <div class="menu"><a href="main_page.html" id="sidebar-text">Dashboard<img src="dashboard.png" alt="Dashboard" class="icon-dashboard"></a></div>
+    <div class="menu"><a href="cariDokter.html" id="sidebar-text">Cari Dokter <img src="magnifying_glass.png" alt="caridokter" class="icon-caridokter"></a></div>
+    <div class="menu"><a href="booking.html" id="sidebar-text">Booking<img src="booking.png" alt="booking" class="icon-booking"></a></div>
+    <div class="menu active"><a href="#" id="sidebar-text">Chat<img src="chat.png" alt="chat" class="icon-chat"></a></div>
+    <div class="menu"><a href="Riwayat.html" id="sidebar-text">Riwayat<img src="riwayat.png" alt="riwayat" class="icon-riwayat"></a></div>
+    <div class="menu"><a href="fasilitas.html" id="sidebar-text">Fasilitas<img src="fasilitas.png" alt="fasilitas" class="icon-fasilitas"></a></div>
+    <div class="menu"><a href="symptom checker.html" id="sidebar-text">symptom checker<img src="checker.png" alt="symptom" class="icon-checker"></a></div>
+    <div class="menu"><a href="bantuan.html" id="sidebar-text">Bantuan<img src="question-mark.png" alt="symptom" class="icon-checker"></a></div>
+
+  </div>
+
+  <div class="main">
+
+    <div class="list-panel">
+      <div class="list-title">Pesan</div>
+
+      <div class="doc-item selected" onclick="pilihDokter(this,'dr. Dinda','Dermatologist')">
+        <div class="avatar">D</div>
+        <div><div class="doc-name">dr. Dinda</div><div class="doc-spec">Dermatologist</div></div>
+      </div>
+
+      <div class="doc-item" onclick="pilihDokter(this,'dr. Budi','Penyakit Dalam')">
+        <div class="avatar">B</div>
+        <div><div class="doc-name">dr. Budi</div><div class="doc-spec">Penyakit Dalam</div></div>
+      </div>
+
+      <div class="doc-item" onclick="pilihDokter(this,'dr. Tono','Dokter Anak')">
+        <div class="avatar">T</div>
+        <div><div class="doc-name">dr. Tono</div><div class="doc-spec">Dokter Anak</div></div>
+      </div>
+    </div>
+
+    <div class="chat-window">
+
+      <div class="chat-header">
+        <div class="avatar" id="h-avatar">D</div>
+        <div>
+          <div class="header-name" id="h-name">dr. Dinda</div>
+          <div class="header-status">● Online</div>
+        </div>
+      </div>
+
+      <div class="chat-body" id="chat-body">
+        <div class="msg-row">
+          <div class="bubble">Halo! Ada yang bisa saya bantu? 😊</div>
+          <span class="msg-time">09:45</span>
+        </div>
+        <div class="msg-row me">
+          <div class="bubble">Dok, kulit saya gatal-gatal dan muncul bintik merah.</div>
+          <span class="msg-time">10:01</span>
+        </div>
+        <div class="msg-row">
+          <div class="bubble">Baik, obatnya diminum 2x sehari ya setelah makan 🙏</div>
+          <span class="msg-time">10:32</span>
+        </div>
+      </div>
+
+      <div class="chat-footer">
+        <input type="text" class="msg-input" id="msg-input" placeholder="Ketik pesan..." onkeydown="if(event.key==='Enter') kirim()">
+        <button class="btn" onclick="kirim()">Kirim</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+function pilihDokter(el, nama, spec) {
+  document.querySelectorAll('.doc-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('h-name').textContent = nama;
+  document.getElementById('h-avatar').textContent = nama[4];
+}
+
+function kirim() {
+  const input = document.getElementById('msg-input');
+  const teks = input.value.trim();
+  if (!teks) return;
+  const now = new Date();
+  const waktu = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  const body = document.getElementById('chat-body');
+  body.innerHTML += `<div class="msg-row me"><div class="bubble">${teks}</div><span class="msg-time">${waktu}</span></div>`;
+  body.scrollTop = body.scrollHeight;
+  input.value = '';
+}
+</script>
+
+</body>
+</html>

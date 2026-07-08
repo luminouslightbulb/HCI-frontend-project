@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Medtex Web</title>
+  <style>
+    *{ margin:0; padding:0; 
+  box-sizing:border-box; 
+  font-family:Arial,sans-serif; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+    }
+
+    .navbar{
+  width:100%;
+  height:70px;
+  background:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+    .logo{
+  font-size:24px;
+  font-weight:bold;
+  color:#1dbf73;
+}
+
+    .search {
+      width: 300px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar{ 
+  width: 240px; 
+  height: calc(100vh - 70px); 
+  background: white; 
+  padding: 25px; 
+  box-shadow: 2px 0 5px rgba(0,0,0,0.03); 
+}
+#a{
+  text-decoration:none;
+  font-style:none;
+}
+.menu {
+  padding:14px;
+  border-radius:10px;
+  margin-bottom:12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menu:hover{
+  background:#1dbf73;
+  color:white;
+}
+
+.active{
+  background:#1dbf73;
+  color:white;
+}
+
+    .main {
+      flex: 1;
+      padding: 35px;
+    }
+
+    .hero {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: #1dbf73;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .doctor-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .doctor-card { 
+      background:white; 
+      padding:25px; 
+      border-radius:15px; 
+      text-align:center; 
+      box-shadow:0 2px 8px rgba(0,0,0,0.05); 
+      transition:0.3s; 
+    }
+    .doctor-card:hover { 
+      transform:translateY(-5px); 
+    }
+    .doc-avatar { 
+      width:90px; 
+      height:90px; 
+      border-radius:50%; 
+      background:#e8f8f1; 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      font-size:32px; 
+      font-weight:bold; 
+      color:#1dbf73; 
+      margin:0 auto 15px; 
+    }
+    .doctor-name { 
+      font-size:20px; 
+      font-weight:bold; 
+    }
+    .specialist { 
+      color:#666; 
+      margin:10px 0; 
+    }
+    .price { 
+      color:#1dbf73; 
+      font-weight:bold; 
+      margin-bottom:15px; 
+    }
+
+    #pfp { 
+      width:20px; 
+      height:20px; 
+    }
+
+    .overlay { 
+      display:none; 
+      position:fixed; 
+      inset:0; 
+      background:rgba(0,0,0,0.4); 
+      align-items:center; 
+      justify-content:center;
+       z-index:100; 
+      }
+    .overlay.show { 
+      display:flex; 
+    }
+    .modal { 
+      background:white;
+      border-radius:15px; 
+      padding:35px; 
+      width:480px; 
+      max-width:90%; 
+      position:relative; 
+    }
+    .modal-close { 
+      position:absolute; 
+      top:15px; 
+      right:20px; 
+      font-size:22px; 
+      cursor:pointer; 
+      color:#aaa; 
+      background:none; 
+      border:none; 
+    }
+    .modal-close:hover { 
+      color:#333; 
+    }
+    .modal-avatar { 
+      width:80px; 
+      height:80px; 
+      border-radius:50%; 
+      background:#e8f8f1; 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      font-size:28px; 
+      font-weight:bold; 
+      color:#1dbf73; 
+      margin:0 auto 15px; 
+    }
+    .modal-name { 
+      font-size:22px; 
+      font-weight:bold; 
+      text-align:center; 
+    }
+    .modal-spec { 
+      text-align:center; 
+      color:#888; 
+      margin-bottom:20px; 
+    }
+    .info-row { 
+      display:flex; 
+      justify-content:space-between; 
+      padding:10px 0; 
+      border-bottom:1px solid #f0f0f0; 
+      font-size:14px; 
+    }
+    .info-row span:first-child { 
+      color:#888; 
+    }
+    .info-row span:last-child { 
+      font-weight:bold; 
+      color:#333; 
+    }
+    .modal-price { 
+      text-align:center; 
+      font-size:20px; 
+      font-weight:bold; 
+      color:#1dbf73; 
+      margin:18px 0; 
+    }
+    .modal-actions { 
+      display:flex; 
+      gap:12px; 
+      margin-top:5px; 
+    }
+    .btn-outline { 
+      flex:1; 
+      padding:12px; 
+      border-radius:10px; 
+      border:2px solid #1dbf73;
+      background:white; 
+      color:#1dbf73; 
+      font-size:14px; 
+      cursor:pointer; 
+      transition:0.3s; 
+    }
+    .btn-outline:hover { 
+      background:#e8f8f1; 
+    }
+    .modal-actions .btn { 
+      flex:1; 
+      padding:12px; 
+    }
+
+    .booking-modal { 
+      background:white; 
+      border-radius:15px; 
+      padding:35px; 
+      width:460px;
+      max-width:90%; 
+      position:relative; 
+    }
+    .form-group { 
+      margin-bottom:18px; 
+    }
+    .form-group label { 
+      display:block; 
+      font-size:14px; 
+      color:#555;
+      margin-bottom:7px; 
+    }
+    .form-group .input, .form-group .fselect { 
+      width:100%; 
+      padding:12px; 
+      border:1px solid #ddd; 
+      border-radius:10px; 
+      font-size:14px; 
+      outline:none; 
+    }
+    .form-group .input:focus, .form-group .fselect:focus { 
+      border-color:#1dbf73; 
+    }
+    .slot-list { 
+      display:flex; 
+      flex-wrap:wrap; 
+      gap:8px; 
+      margin-top:5px; 
+    }
+    .slot { 
+      padding:9px 16px; 
+      border:1px solid #ddd; 
+      border-radius:10px; 
+      font-size:13px; 
+      cursor:pointer; 
+      transition:0.2s; 
+    }
+    .slot:hover { 
+      border-color:#1dbf73; 
+      color:#1dbf73; 
+    }
+    .slot.aktif { 
+      background:#1dbf73; 
+      color:white; 
+      border-color:#1dbf73; 
+    }
+
+    .sukses-modal { 
+      background:white; 
+      border-radius:15px; 
+      padding:40px; 
+      width:380px; 
+      text-align:center; 
+    }
+    .sukses-icon { 
+      font-size:52px; 
+      margin-bottom:15px; 
+    }
+    .sukses-modal h3 { 
+      font-size:20px; 
+      margin-bottom:8px; 
+    }
+    .sukses-modal p { 
+      color:#888; 
+      margin-bottom:20px; 
+      font-size:14px; 
+    }
+    #pfp{ width:20px; 
+      height:20px; 
+    }
+    .icon-caridokter{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-dashboard{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-booking{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-chat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-riwayat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-fasilitas{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-checker{
+      width:30;
+      height:30px;
+      padding-left:10px;
+    }
+    .greetings{
+      font-weight:900;
+      font-size:30px;
+      margin-bottom:10px;
+    }
+    .follow-up{
+      margin-bottom:10px;
+    }
+    #sidebar-text{
+      color:black;
+      text-decoration:none;
+    }
+    #to-help{
+      text-decoration:none;
+      color:white;
+    }
+    h3{
+      margin-bottom:10px;
+      margin-top:10px;
+    }
+
+    .fasilitas-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .fasilitas-card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+    .fasilitas-card:hover {
+      transform: translateY(-5px);
+    }
+    .fas-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #e8f8f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 15px;
+      overflow: hidden;
+    }
+    .fas-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .fas-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .fas-tipe {
+      color: #666;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    .fas-jarak {
+      color: #1dbf73;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    /* Fasilitas detail modal */
+    .overlay-fas { 
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,0.4); 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 100; 
+    }
+    .overlay-fas.show { 
+      display: flex; 
+    }
+    .modal-fas {
+      background: white;
+      border-radius: 15px;
+      padding: 35px;
+      width: 480px;
+      max-width: 90%;
+      position: relative;
+    }
+    .icon-chat2,.icon-booking2{
+      width:20px;
+      height:20px;
+      margin-left:5px;
+    }
+    .link1{
+      text-decoration:none;
+      color:black;
+    }
+    .link2{
+      text-decoration:none;
+      color:white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">MEDTEX</div>
+  
+  <div><img src="profile-icon-9.png" alt="pfp" id="pfp">User</div>
+</div>
+
+<div class="container">
+
+  <div class="sidebar">
+    <div class="menu active"><a href="#" id="sidebar-text">Dashboard<img src="dashboard.png" alt="Dashboard" class="icon-dashboard"></a></div>
+    <div class="menu"><a href="cariDokter.html" id="sidebar-text">Cari Dokter <img src="magnifying_glass.png" alt="caridokter" class="icon-caridokter"></a></div>
+    <div class="menu"><a href="booking.html" id="sidebar-text">Booking<img src="booking.png" alt="booking" class="icon-booking"></a></div>
+    <div class="menu"><a href="chat.html" id="sidebar-text">Chat<img src="chat.png" alt="chat" class="icon-chat"></a></div>
+    <div class="menu"><a href="Riwayat.html" id="sidebar-text">Riwayat<img src="riwayat.png" alt="riwayat" class="icon-riwayat"></a></div>
+    <div class="menu"><a href="fasilitas.html" id="sidebar-text">Fasilitas<img src="fasilitas.png" alt="fasilitas" class="icon-fasilitas"></a></div>
+    <div class="menu"><a href="symptom checker.html" id="sidebar-text">symptom checker<img src="checker.png" alt="symptom" class="icon-checker"></a></div>
+    <div class="menu"><a href="bantuan.html" id="sidebar-text">Bantuan<img src="question-mark.png" alt="symptom" class="icon-checker"></a></div>
+
+  </div>
+
+  
+  <div class="main">
+
+    
+    <!-- <div class="hero">
+      <h2>Temukan layanan kesehatan terbaik</h2>
+      <p>Cari dokter spesialis sesuai kebutuhan Anda</p>
+      <button class="btn"><a href="CariDokter.html">Cari Dokter</a></button>
+    </div>
+ -->
+    <div class="hero">
+    <div class="greetings">Selamat datang ke Medtex</div>
+    <div class="follow-up">temukan bantuan medis yang anda perlu. <br>jika ada kesulitan, anda dapat mengecek halaman bantuan.</div>
+    <button class="btn"><a href="bantuan.html" id="to-help">halaman bantuan</a></button>
+    </div>
+
+    <h3 class="section-title">Dokter yang di Rekomendasikan</h3>
+    <div class="doctor-list" id="doctor-list"></div>
+    <h3>Fasilitas yang direkomendasikan</h3>
+    <div class="fasilitas-list" id="fasilitas-list"></div>
+  </div>
+
+</div>
+
+
+<div class="overlay" id="overlay-detail">
+  <div class="modal">
+    <button class="modal-close" onclick="tutup('overlay-detail')">✕</button>
+    <div class="modal-avatar" id="d-avatar"></div>
+    <div class="modal-name" id="d-nama"></div>
+    <div class="modal-spec" id="d-spesialis"></div>
+    <div class="info-row"><span>Lokasi</span><span id="d-lokasi"></span></div>
+    <div class="info-row"><span>Pengalaman</span><span id="d-exp"></span></div>
+    <div class="info-row"><span>Rating</span><span id="d-rating"></span></div>
+    <div class="info-row"><span>Jadwal</span><span id="d-jadwal"></span></div>
+    <div class="modal-price" id="d-harga"></div>
+    <div class="modal-actions">
+      <button class="btn-outline"><a href="chat.html" class="link1">Chat<img src="chat.png" alt="chat" class="icon-chat2"></a></button>
+      <button class="btn" ><a href="booking.html" class="link2">Booking<img src="booking.png" alt="booking" class="icon-booking2"></a></button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay-fas" id="overlay-fasilitas">
+  <div class="modal-fas">
+    <button class="modal-close" onclick="tutupFas()">✕</button>
+    <div class="modal-avatar" id="f-avatar" style="margin:0 auto 15px;"></div>
+    <div class="modal-name" id="f-nama" style="text-align:center;"></div>
+    <div class="modal-spec" id="f-tipe" style="text-align:center;color:#888;margin-bottom:20px;"></div>
+    <div class="info-row"><span>Daerah</span><span id="f-daerah"></span></div>
+    <div class="info-row"><span>Waktu</span><span id="f-waktu"></span></div>
+    <div class="info-row"><span>Alamat</span><span id="f-alamat"></span></div>
+    <div class="info-row"><span>Jarak</span><span id="f-jarak"></span></div>
+    <div class="info-row"><span>Rating</span><span id="f-rating"></span></div>
+    <div class="modal-actions" style="margin-top:20px;">
+      <button class="btn" style="flex:1;padding:12px;" onclick="window.location.href='fasilitas.html'">Lihat Semua Fasilitas</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+const dokterData = [
+  { nama:"dr. Dinda",  spesialis:"Dermatologist",  lokasi:"Jakarta", exp:"5 tahun",  rating:" 4.9", jadwal:"Sen–Jum, 08:00–16:00", harga:"Rp150.000", inisial:"D" },
+  { nama:"dr. Budi",   spesialis:"Penyakit Dalam", lokasi:"Bandung", exp:"8 tahun",  rating:" 4.8", jadwal:"Sen–Sab, 09:00–17:00", harga:"Rp120.000", inisial:"B" },
+  { nama:"dr. Tono",   spesialis:"Dokter Anak",    lokasi:"Bogor",   exp:"6 tahun",  rating:" 4.7", jadwal:"Sel–Sab, 08:00–15:00", harga:"Rp130.000", inisial:"T" },
+];
+
+let dokterAktif = null;
+
+function renderDokter(list) {
+  const el = document.getElementById('doctor-list');
+  el.innerHTML = list.map((d, i) => `
+    <div class="doctor-card">
+      <div class="doc-avatar">${d.inisial}</div>
+      <div class="doctor-name">${d.nama}</div>
+      <div class="specialist">${d.spesialis}</div>
+      <div class="price">${d.harga}</div>
+      <button class="btn" onclick="bukaDetail(${dokterData.indexOf(d)})">Detail</button>
+    </div>
+  `).join('');
+}
+
+function bukaDetail(i) {
+  dokterAktif = dokterData[i];
+  const d = dokterAktif;
+  document.getElementById('d-avatar').textContent = d.inisial;
+  document.getElementById('d-nama').textContent = d.nama;
+  document.getElementById('d-spesialis').textContent = d.spesialis;
+  document.getElementById('d-lokasi').textContent = d.lokasi;
+  document.getElementById('d-exp').textContent = d.exp;
+  document.getElementById('d-rating').textContent = d.rating;
+  document.getElementById('d-jadwal').textContent = d.jadwal;
+  document.getElementById('d-harga').textContent = d.harga;
+  buka('overlay-detail');
+}
+
+
+
+function buka(id) { document.getElementById(id).classList.add('show'); }
+function tutup(id) { document.getElementById(id).classList.remove('show'); }
+
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
+});
+
+renderDokter(dokterData);
+
+
+const fasilitasDekat = [
+  { nama:"Klinik Pratama Kusuma Medika", tipe:"Klinik",      rating:5.0, jarak:120,  daerah:"Jakarta", waktu:"Sen-Jum, 10:00-18:00", alamat:"JL. Hadidji No. 28",             img:"klinik pratama.jpeg" },
+  { nama:"Klinik Pelita",                tipe:"Klinik",      rating:4.3, jarak:600,  daerah:"Jakarta", waktu:"Sen-Sab, 10:00-21:00",  alamat:"JL. KH. Moh. Mansyur No 28c",   img:"klinik pelita.jpeg" },
+  { nama:"Klinik Sukaraya",              tipe:"Klinik",      rating:4.2, jarak:900,  daerah:"Jakarta", waktu:"Sen-Jum, 8:00-16:00",   alamat:"Ruko Perumahan Sukaraya Indah", img:"klinik sukaraya.jpeg" },
+];
+
+function formatJarak(m) {
+  return m >= 1000 ? (m / 1000).toFixed(1) + " km" : m + " m";
+}
+
+function renderFasilitas() {
+  const el = document.getElementById('fasilitas-list');
+  el.innerHTML = fasilitasDekat.map((f, i) => `
+    <div class="fasilitas-card">
+      <div class="fas-avatar"><img src="${f.img}" alt="${f.nama}"></div>
+      <div class="fas-name">${f.nama}</div>
+      <div class="fas-jarak">${formatJarak(f.jarak)}</div>
+      <button class="btn" onclick="bukaDetailFas(${i})">Detail</button>
+    </div>
+  `).join('');
+}
+
+function bukaDetailFas(i) {
+  const f = fasilitasDekat[i];
+  document.getElementById('f-avatar').innerHTML = `<img src="${f.img}" alt="${f.nama}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  document.getElementById('f-nama').textContent = f.nama;
+  document.getElementById('f-tipe').textContent = f.tipe;
+  document.getElementById('f-daerah').textContent = f.daerah;
+  document.getElementById('f-waktu').textContent = f.waktu;
+  document.getElementById('f-alamat').textContent = f.alamat;
+  document.getElementById('f-jarak').textContent = formatJarak(f.jarak);
+  document.getElementById('f-rating').textContent = f.rating.toFixed(1);
+  document.getElementById('overlay-fasilitas').classList.add('show');
+}
+
+function tutupFas() {
+  document.getElementById('overlay-fasilitas').classList.remove('show');
+}
+
+document.getElementById('overlay-fasilitas').addEventListener('click', function(e) {
+  if (e.target === this) tutupFas();
+});
+
+renderFasilitas();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>MEDTEX - Booking</title>
+<style>
+*{ margin:0; 
+  padding:0; 
+  box-sizing:border-box; 
+  font-family:Arial,sans-serif; 
+}
+body{ 
+  background:#f5f7f6; 
+}
+
+.navbar{ 
+  height:70px; 
+  background:white; 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  padding:0 40px; 
+  box-shadow:0 2px 8px rgba(0,0,0,0.05); 
+}
+.logo{ 
+  font-size:24px; 
+  font-weight:bold; 
+  color:#1dbf73; 
+}
+.user{ 
+  font-size:15px; 
+  color:#555; 
+}
+
+.container{ 
+  display:flex; 
+}
+
+.sidebar{ 
+  width:240px;
+   height:calc(100vh - 70px);
+    background:white;
+     padding:25px;
+      box-shadow:2px 0 5px rgba(0,0,0,0.03); 
+}
+.menu{ 
+  padding:14px;
+   border-radius:10px;
+    margin-bottom:12px;
+     cursor:pointer;
+      transition:0.3s;
+       color:#555; }
+.menu:hover{ 
+  background:#1dbf73;
+   color:white; 
+  }
+.active{ 
+  background:#1dbf73;
+   color:white;
+   }
+
+.main{ 
+  flex:1;
+   padding:35px;
+}
+
+.section-title{ 
+  font-size:24px;
+   font-weight:bold;
+    margin-bottom:25px;
+}
+
+.form-box{ 
+  background:white; 
+  padding:30px; 
+  border-radius:15px; 
+  box-shadow:0 2px 5px rgba(0,0,0,0.05); 
+  max-width:600px; 
+  margin-left:400px;
+}
+.form-group{ 
+  margin-bottom:20px; 
+}
+label{ 
+  display:block; 
+  font-size:14px; 
+  color:#555; 
+  margin-bottom:8px; 
+}
+.input, .select{ 
+  width:100%; 
+  padding:13px; 
+  border:1px solid #ddd; 
+  border-radius:10px; 
+  font-size:14px; 
+  outline:none; 
+}
+.input:focus, .select:focus{ 
+  border-color:#1dbf73; 
+}
+.row{ 
+  display:flex; 
+  gap:15px; 
+}
+.row .form-group{ 
+  flex:1; 
+}
+.btn{ 
+  background:#1dbf73; 
+  color:white; 
+  border:none; 
+  padding:14px; 
+  width:100%; 
+  border-radius:10px; 
+  font-size:15px; 
+  cursor:pointer; 
+  transition:0.3s; 
+  margin-top:5px; 
+}
+.btn:hover{ 
+  background:#18a966; 
+}
+
+.jadwal-title{ 
+  font-size:14px; 
+  color:#555; 
+  margin-bottom:10px; 
+}
+.slot-list{ 
+  display:flex; 
+  flex-wrap:wrap; 
+  gap:10px; 
+}
+.slot{ 
+  padding:10px 18px; 
+  border:1px solid #ddd; 
+  border-radius:10px; 
+  font-size:13px; 
+  cursor:pointer; 
+  transition:0.2s; 
+}
+.slot:hover{ 
+  border-color:#1dbf73; 
+  color:#1dbf73; 
+}
+.slot.aktif{ 
+  background:#1dbf73; 
+  color:white; 
+  border-color:#1dbf73; 
+}
+
+.popup-bg{ 
+  display:none; 
+  position:fixed; 
+  inset:0; 
+  background:rgba(0,0,0,0.3); 
+  align-items:center; 
+  justify-content:center; 
+}
+.popup-bg.show{ 
+  display:flex; 
+}
+.popup{ 
+  background:white;
+  padding:40px;
+  border-radius:15px; 
+  text-align:center; 
+}
+.popup-icon{ 
+  font-size:48px; 
+  margin-bottom:15px; 
+}
+.popup h3{ 
+  font-size:20px; 
+  margin-bottom:8px; 
+}
+.popup p{ 
+  color:#888; 
+  margin-bottom:20px; 
+}
+.btn-sm{ 
+  background:#1dbf73; 
+  color:white; 
+  border:none; 
+  padding:12px 30px; 
+  border-radius:10px; 
+  cursor:pointer; 
+  font-size:14px; 
+}
+#pfp{ 
+  width:20px; 
+  height:20px; 
+  }
+.icon-caridokter{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-dashboard{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-booking{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-chat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-riwayat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-fasilitas{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-checker{
+      width:30;
+      height:30px;
+      padding-left:10px;
+    }
+    .form-title{
+        font-size:28px; 
+  font-weight:bold; 
+  margin-bottom:20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">MEDTEX</div>
+  <div><img src="profile-icon-9.png" alt="pfp" id="pfp">User</div>
+</div>
+
+<div class="container">
+
+  <div class="sidebar">
+    <div class="menu"><a href="main_page.html">Dashboard<img src="dashboard.png" alt="Dashboard" class="icon-dashboard"></a></div>
+    <div class="menu"><a href="cariDokter.html" id="option">Cari Dokter <img src="magnifying_glass.png" alt="caridokter" class="icon-caridokter"></a></div>
+    <div class="menu active"><a href="#">Booking<img src="booking.png" alt="booking" class="icon-booking"></a></div>
+    <div class="menu"><a href="chat.html">Chat<img src="chat.png" alt="chat" class="icon-chat"></a></div>
+    <div class="menu"><a href="Riwayat.html">Riwayat<img src="riwayat.png" alt="riwayat" class="icon-riwayat"></a></div>
+    <div class="menu"><a href="fasilitas.html">Fasilitas<img src="fasilitas.png" alt="fasilitas" class="icon-fasilitas"></a></div>
+    <div class="menu"><a href="symptom_checker.html">Symptom Checker<img src="checker.png" alt="symptom" class="icon-checker"></a></div>
+  </div>
+
+  <div class="main">
+    <!-- <div class="section-title">Booking Dokter</div> -->
+
+    <div class="form-box">
+      <div class="form-title">Forum booking</div>
+      <!-- <div class="form-group">
+        <label>Pilih Dokter</label>
+        <select class="select">
+          <option>-- Pilih Dokter --</option>
+          <option>dr. Dinda - Dermatologist</option>
+          <option>dr. Budi - Penyakit Dalam</option>
+          <option>dr. Tono - Dokter Anak</option>
+        </select>
+      </div> -->
+
+      <div class="row">
+        <div class="form-group">
+          <label>Tanggal</label>
+          <input type="date" class="input">
+        </div>
+        <div class="form-group">
+          <label>Tipe Konsultasi</label>
+          <select class="select">
+            <option>Tatap Muka</option>
+            <option>Online</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="jadwal-title">Pilih Jam</div>
+        <div class="slot-list">
+          <div class="slot" onclick="pilihSlot(this)">08:00</div>
+          <div class="slot" onclick="pilihSlot(this)">09:00</div>
+          <div class="slot" onclick="pilihSlot(this)">10:00</div>
+          <div class="slot" onclick="pilihSlot(this)">11:00</div>
+          <div class="slot" onclick="pilihSlot(this)">13:00</div>
+          <div class="slot" onclick="pilihSlot(this)">14:00</div>
+          <div class="slot" onclick="pilihSlot(this)">15:00</div>
+          <div class="slot" onclick="pilihSlot(this)">16:00</div>
+          <div class="slot" onclick="pilihCustom(this)">+ Custom</div>
+        </div>
+        <input type="time" class="input" id="custom-time" style="display:none;margin-top:10px;width:160px;">
+      </div>
+
+      <div class="form-group">
+        <label>Keluhan</label>
+        <textarea class="input" rows="3" placeholder="Tulis keluhan singkat..."></textarea>
+      </div>
+
+      <button class="btn" onclick="booking()">Konfirmasi Booking</button>
+
+    </div>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup-bg" id="popup">
+  <div class="popup">
+    <div class="popup-icon"></div>
+    <h3>Booking Berhasil!</h3>
+    <p>Jadwal konsultasi kamu sudah dikonfirmasi.</p>
+    <button class="btn-sm" onclick="document.getElementById('popup').classList.remove('show')">Tutup</button>
+  </div>
+</div>
+
+<script>
+function pilihSlot(el) {
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('aktif'));
+  el.classList.add('aktif');
+  document.getElementById('custom-time').style.display = 'none';
+}
+function pilihCustom(el) {
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('aktif'));
+  el.classList.add('aktif');
+  document.getElementById('custom-time').style.display = 'block';
+}
+function booking() {
+  document.getElementById('popup').classList.add('show');
+}
+</script>
+
+</body>
+</html>

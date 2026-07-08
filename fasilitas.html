@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEDTEX - Fasilitas</title>
+
+<style>
+*{ 
+  margin:0; 
+  padding:0; 
+  box-sizing:border-box; 
+  font-family:Arial,sans-serif; 
+}
+body{ 
+  background:#f5f7f6; 
+}
+
+.navbar{ 
+  width:100%; 
+  height:70px; 
+  background:white; 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  padding:0 40px; 
+  box-shadow:0 2px 8px rgba(0,0,0,0.05); 
+}
+.logo{ 
+  font-size:24px; 
+  font-weight:bold; 
+  color:#1dbf73; 
+}
+
+.container{ 
+  display:flex; 
+}
+
+.sidebar{ 
+  width:240px; 
+  height:calc(100vh - 70px); 
+  background:white; 
+  padding:25px; 
+  box-shadow:2px 0 5px rgba(0,0,0,0.03); 
+}
+.menu{ 
+  padding:14px; 
+  border-radius:10px; margin-bottom:12px; 
+  cursor:pointer; 
+  transition:0.3s; 
+  color:#555; 
+}
+.menu:hover{ 
+  background:#1dbf73; 
+  color:white; 
+}
+.active{ 
+  background:#1dbf73;
+   color:white; 
+  }
+.menu a{ 
+  text-decoration:none; 
+  color:inherit; 
+  display:block; 
+}
+
+.main{ 
+  flex:1; 
+  padding:35px; 
+}
+
+.fasilitas{ 
+  margin-left:0px; 
+  margin-bottom:30px; 
+  font-size:30px; 
+  background-color:white;
+  border-radius:15px;
+}
+.fasilitas.hidden{ 
+  display:none; 
+}
+
+.search-row{ 
+  display:flex; 
+  /* padding-left:90px; */
+  background:white;
+  border-radius:15px;
+  /* padding-right:90px; */
+  margin-bottom:30px; 
+}
+.search-input{ 
+  padding:10px 20px; 
+  /* padding-bottom: 30px; */
+  font-size:15px;
+  border:1px solid #ddd; 
+  border-radius:10px; 
+  width:100%;
+  outline:none;
+  margin-bottom:0px;
+}
+.search-input:focus{ 
+  border-color:#1dbf73; 
+}
+.search-button{ 
+  /* margin-left:20px;  */
+  width:20%; 
+  font-size:15px; 
+  height:42px; 
+  background:#1dbf73; 
+  color:white; 
+  border:none; 
+  border-radius:10px; 
+  cursor:pointer; 
+}
+
+.fasilitas-terdekat{ 
+  font-size:20px; 
+  padding-left:60px; 
+  padding-bottom:20px; 
+  font-weight:900;
+}
+
+.jarak{ 
+  display:flex; 
+  font-size:20px; 
+}
+.test{ 
+  display:flex; 
+}
+.tombol-detail{ 
+  background:#1dbf73; 
+  color:white; 
+  border:none; 
+  padding:14px; 
+  width:120px; 
+  border-radius:10px; 
+  font-size:15px; 
+  cursor:pointer; 
+  transition:0.3s; 
+  margin-top:5px; 
+}
+.tombol-detail:hover{ 
+  background:#18a966; 
+}
+.judul{ 
+  padding-bottom:20px; 
+  font-weight:900; 
+}
+.img-fasilitas{ 
+  padding-right:50px; 
+  
+}
+.alamat{ 
+  display:flex; 
+  font-size:20px; 
+}
+.rating{ 
+  display:flex; 
+  font-size:20px; 
+}
+.bintang{
+  width:20px; 
+  height:20px; 
+}
+.filter-pencarian{ 
+  /* padding-left:90px;  */
+  display:flex; 
+  gap:15px; 
+  margin-bottom:20px; 
+  width:100%;
+}
+.filter, .tipe{ 
+  padding:13px; 
+  border-radius:10px; 
+  border:1px solid #ddd; 
+  font-size:14px; 
+  width:100%; 
+}
+.filter:focus, .tipe:focus{ 
+  border-color:#1dbf73; 
+  outline:none; 
+}
+.img{ 
+  width:20px;
+  height:20px; 
+}
+.foto-fasilitas{ 
+  width:300px; 
+  height:300px; 
+  object-fit:cover; 
+}
+.daerah{
+  display:flex; 
+  font-size:20px; 
+}
+#pfp{ 
+  width:20px; 
+  height:20px; 
+}
+.no-result{ 
+  text-align:center; 
+  padding:40px; 
+  color:#999; 
+  font-size:20px; 
+  background:white; 
+  border-radius:10px; 
+  margin-left:60px; 
+  display:none; 
+}
+.no-result.visible{ 
+  display:block; 
+}
+
+.overlay{ 
+  display:none; 
+  position:fixed; 
+  inset:0; 
+  background:rgba(0,0,0,0.4); 
+  align-items:center; 
+  justify-content:center; 
+  z-index:100; }
+.overlay.show{ 
+  display:flex; 
+}
+.modal{ 
+  background:white; 
+  border-radius:15px; 
+  padding:35px; 
+  width:480px; 
+  max-width:90%; 
+  position:relative; 
+}
+.modal-close{ 
+  position:absolute; 
+  top:15px; right:20px; 
+  font-size:22px; 
+  cursor:pointer; 
+  color:#aaa; 
+  background:none; 
+  border:none; 
+}
+.modal-close:hover{ 
+  color:#333; 
+}
+.modal-img{ 
+  width:100%; 
+  height:200px; 
+  object-fit:cover; 
+  border-radius:10px; 
+  margin-bottom:20px; 
+}
+.modal-img-placeholder{ 
+  width:100%; 
+  height:200px; 
+  background:#e8f8f1;
+  border-radius:10px; 
+  margin-bottom:20px; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  font-size:48px; 
+}
+.modal-name{ 
+  font-size:22px; 
+  font-weight:bold; 
+  margin-bottom:4px; 
+}
+.modal-tipe{ 
+  color:#888; 
+  font-size:14px; 
+  margin-bottom:20px; 
+}
+.info-row{ 
+  display:flex; 
+  justify-content:space-between; 
+  padding:10px 0; 
+  border-bottom:1px solid #f0f0f0; 
+  font-size:14px; 
+}
+.info-row span:first-child{ 
+  color:#888; 
+}
+.info-row span:last-child{ 
+  font-weight:bold; 
+  color:#333; 
+}
+.modal-actions{ 
+  display:flex; 
+  gap:12px; 
+  margin-top:20px; 
+}
+.modal-deskripsi{ 
+  color:#333; 
+  font-size:14px; 
+  font-weight:bold; 
+  margin-top:8px; 
+  margin-bottom:20px; 
+}
+.btn{ 
+  background:#1dbf73; 
+  color:white; 
+  border:none; 
+  padding:13px 25px; 
+  border-radius:10px; 
+  cursor:pointer; 
+  font-size:14px; 
+  transition:0.3s; 
+  text-decoration:none; 
+  display:inline-block; 
+}
+.btn:hover{ 
+  background:#18a966; 
+}
+.btn-outline{ 
+  flex:1; 
+  padding:12px; 
+  border-radius:10px; 
+  border:2px solid #1dbf73; 
+  background:white; 
+  color:#1dbf73; 
+  font-size:14px; 
+  cursor:pointer; 
+  transition:0.3s; 
+  text-decoration:none; 
+  text-align:center; 
+}
+.btn-outline:hover{ 
+  background:#e8f8f1; 
+}
+.modal-actions .btn{ 
+  flex:1; 
+  padding:12px; 
+  text-align:center;
+}
+.icon-caridokter{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-dashboard{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-booking{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-chat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-riwayat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-fasilitas{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-checker{
+      width:30;
+      height:30px;
+      padding-left:10px;
+    }
+    #sidebar-text{
+      color:black;
+      text-decoration:none;
+    }
+    .search-section{
+      background:white;
+    padding:30px;
+    border-radius:15px;
+    margin-bottom:30px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.05);
+    }
+    .search-title{ 
+  font-size:28px; 
+  font-weight:bold; 
+  margin-bottom:20px; 
+}
+</style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">MEDTEX</div>
+    <div><img src="profile-icon-9.png" alt="pfp" id="pfp">User</div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+    <div class="menu"><a href="main_page.html" id="sidebar-text">Dashboard<img src="dashboard.png" alt="Dashboard" class="icon-dashboard"></a></div>
+    <div class="menu"><a href="cariDokter.html" id="sidebar-text">Cari Dokter <img src="magnifying_glass.png" alt="caridokter" class="icon-caridokter"></a></div>
+    <div class="menu"><a href="booking.html" id="sidebar-text">Booking<img src="booking.png" alt="booking" class="icon-booking"></a></div>
+    <div class="menu"><a href="chat.html" id="sidebar-text">Chat<img src="chat.png" alt="chat" class="icon-chat"></a></div>
+    <div class="menu"><a href="Riwayat.html" id="sidebar-text">Riwayat<img src="riwayat.png" alt="riwayat" class="icon-riwayat"></a></div>
+    <div class="menu active"><a href="#" id="sidebar-text">Fasilitas<img src="fasilitas.png" alt="fasilitas" class="icon-fasilitas"></a></div>
+    <div class="menu"><a href="symptom checker.html" id="sidebar-text">symptom checker<img src="checker.png" alt="symptom" class="icon-checker"></a></div>
+    <div class="menu"><a href="bantuan.html" id="sidebar-text">Bantuan<img src="question-mark.png" alt="symptom" class="icon-checker"></a></div>
+
+  </div>
+
+    <div class="main">
+      <div class="fasilitas-group">
+        <div class="search-section">
+          <div class="search-title">Cari Fasilitas</div>
+        <div class="search-row">
+          <input class="search-input" id="search-input" placeholder="Cari nama Fasilitas..." />
+        </div>
+
+        <div class="filter-pencarian" >
+          <select name="cari-berdasarkan" class="filter" id="filter-sort">
+            <option value="semua">semua</option>
+            <option value="terdekat">fasilitas terdekat</option>
+            <option value="terbaik">fasilitas terbaik</option>
+          </select>
+          <select name="tipe-fasilitas" class="filter" id="filter-tipe">
+            <option value="semua">semua</option>
+            <option value="Klinik">Klinik</option>
+            <option value="Rumah Sakit">Rumah Sakit</option>
+          </select>
+          <select name="filter-daerah" class="filter" id="filter-daerah">
+            <option value="semua">semua daerah</option>
+            <option value="Jakarta">Jakarta</option>
+            <option value="Bandung">Bandung</option>
+            <option value="Bogor">Bogor</option>
+          </select>
+          <button class="search-button" onclick="doSearch()">Cari</button>
+        </div>
+        </div>
+        <div class="fasilitas-terdekat">Daftar Fasilitas</div>
+
+
+        <div class="fasilitas"
+             data-nama="klinik sukaraya" data-tipe="Klinik" data-rating="4.2"
+             data-jarak="900" data-daerah="Jakarta" data-alamat="ruko perumahan sukaraya indah"
+             data-idx="0">
+          <div class="test">
+            <div class="img-fasilitas"><img src="klinik sukaraya.jpeg" alt="klinik sukaraya" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Klinik Sukaraya</div>
+              <div class="rating">Rating: <div class="no-rating">4,2</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Jakarta</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">Ruko Perumahan Sukaraya Indah</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">900 m</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(0)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fasilitas"
+             data-nama="klinik pratama kusuma medika" data-tipe="Klinik" data-rating="5.0"
+             data-jarak="120" data-daerah="Jakarta" data-alamat="jl. hadidji no. 28"
+             data-idx="1">
+          <div class="test">
+            <div class="img-fasilitas"><img src="klinik pratama.jpeg" alt="klinik pratama" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Klinik Pratama Kusuma Medika</div>
+              <div class="rating">Rating: <div class="no-rating">5,0</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Jakarta</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">JL. Hadidji No. 28</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">120 m</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(1)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fasilitas"
+             data-nama="rumah sakit ciputra" data-tipe="Rumah Sakit" data-rating="4.9"
+             data-jarak="2000" data-daerah="Jakarta" data-alamat="jl. boulevard blok g1 citra 5"
+             data-idx="2">
+          <div class="test">
+            <div class="img-fasilitas"><img src="ciputra hospital.jpeg" alt="ciputra hospital" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Rumah Sakit Ciputra</div>
+              <div class="rating">Rating: <div class="no-rating">4,9</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Jakarta</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">Jl. Boulevard Blok G1 Citra 5</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">2,0 km</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(2)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fasilitas"
+             data-nama="klinik pelita" data-tipe="Klinik" data-rating="4.3"
+             data-jarak="600" data-daerah="Jakarta" data-alamat="jl. kh. moh. mansyur no 28c"
+             data-idx="3">
+          <div class="test">
+            <div class="img-fasilitas"><img src="klinik pelita.jpeg" alt="klinik pelita" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Klinik Pelita</div>
+              <div class="rating">Rating: <div class="no-rating">4,3</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Jakarta</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">JL. KH. Moh. Mansyur No 28c</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">600 m</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(3)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fasilitas"
+             data-nama="rumah sakit pondok indah" data-tipe="Rumah Sakit" data-rating="4.0"
+             data-jarak="900" data-daerah="Jakarta" data-alamat="jl. metro duta kav."
+             data-idx="4">
+          <div class="test">
+            <div class="img-fasilitas"><img src="RS-Pondok-Indah.jpg" alt="rumah sakit pondok indah" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Rumah Sakit Pondok Indah</div>
+              <div class="rating">Rating: <div class="no-rating">4,0</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Jakarta</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">JL. Metro Duta Kav.</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">900 m</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(4)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fasilitas"
+             data-nama="rumah sakit hermina pasteur" data-tipe="Rumah Sakit" data-rating="5.0"
+             data-jarak="155000" data-daerah="Bandung" data-alamat="jl. dr. djunjunan no. 107"
+             data-idx="5">
+          <div class="test">
+            <div class="img-fasilitas"><img src="rs-hermina-pasteur.webp" alt="rumah sakit hermina pasteur" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Rumah Sakit Hermina Pasteur</div>
+              <div class="rating">Rating: <div class="no-rating">5,0</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Bandung</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">JL. Dr. Djunjunan No. 107</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">155,0 km</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(5)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fasilitas"
+             data-nama="klinik mutiara cikutra" data-tipe="Klinik" data-rating="4.5"
+             data-jarak="160000" data-daerah="Bandung" data-alamat="jl. cikutra no. 115"
+             data-idx="6">
+          <div class="test">
+            <div class="img-fasilitas"><img src="mutiara-cikutra.jpg" alt="klinik mutiara cikutra" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Klinik Mutiara Cikutra</div>
+              <div class="rating">Rating: <div class="no-rating">4,5</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Bandung</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">JL. Cikutra No. 115</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">160,0 km</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(6)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fasilitas"
+             data-nama="klinik medika" data-tipe="Klinik" data-rating="4.7"
+             data-jarak="48000" data-daerah="Bogor" data-alamat="jl. durian raya no. 63"
+             data-idx="7">
+          <div class="test">
+            <div class="img-fasilitas"><img src="medica klinik.jpg" alt="klinik medika" class="foto-fasilitas"></div>
+            <div class="desk-fasilitas">
+              <div class="judul">Klinik Medika</div>
+              <div class="rating">Rating: <div class="no-rating">4,7</div><img src="bintang.png" alt="bintang" class="bintang"></div>
+              <div class="daerah"><div class="label-daerah">Daerah:</div><div class="nama-daerah">Bogor</div></div>
+              <div class="alamat"><div class="icon"><img src="location_pin.png" alt="icon-lokasi" class="img"></div><div class="jalan">JL. Durian Raya No. 63</div></div>
+              <div class="jarak">Jarak: <div class="jarak-dari-lokasi">48,0 km</div></div>
+              <button class="tombol-detail" onclick="bukaDetail(7)">Detail</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="no-result" id="no-result">Tidak ada fasilitas yang ditemukan.</div>
+
+      </div>
+    </div>
+  </div>
+
+<div class="overlay" id="overlay-detail">
+  <div class="modal">
+    <button class="modal-close" onclick="tutup('overlay-detail')">✕</button>
+    <img id="m-img" class="modal-img" src="" alt="">
+    <div class="modal-name" id="m-nama"></div>
+    <div class="modal-tipe" id="m-tipe"></div>
+    <div class="info-row"><span>Daerah</span><span id="m-daerah"></span></div>
+    <div class="info-row"><span>Waktu</span><span id="m-waktu"></span></div>
+    <div class="info-row"><span>Alamat</span><span id="m-alamat"></span></div>
+    <div class="info-row"><span>Jarak</span><span id="m-jarak"></span></div>
+    <div class="info-row"><span>Rating</span><span id="m-rating"></span></div>
+    <div class="info-row" style="flex-direction:column; align-items:flex-start;"><span>Deskripsi</span><span id="m-deskripsi" class="modal-deskripsi"></span></div>
+    <div class="modal-actions">
+      <a id="m-link" href="#" class="btn">Kunjungi Halaman</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fasilitasData = [
+    { nama:"Klinik Sukaraya",             tipe:"Klinik",       rating:4.2, jarak:900,    daerah:"Jakarta", waktu:"Sen-Jum, 8:00-16:00", alamat:"Ruko Perumahan Sukaraya Indah", img:"klinik sukaraya.jpeg",    deskripsi:"Klinik Central Medika merupakan unit layanan kesehatan yang berlokasi di Kecamatan Karangbahagia, Kabupaten Bekasi. Klinik dapat memberikan pelayanan Kebidanan, Kesehatan Umum. Klinik juga memberikan pelayanan laboratorium dan radiologi untuk menunjang hasil diagnosa medis.test" },
+    { nama:"Klinik Pratama Kusuma Medika",tipe:"Klinik",       rating:5.0, jarak:120,    daerah:"Jakarta", waktu:"Sen-Jum, 10:00-18:00",alamat:"JL. Hadidji No. 28",            img:"klinik pratama.jpeg",     deskripsi:"Kami hadir memberikan pelayanan kesehatan terbaik didukung oleh dokter-dokter yang ahli dan berpengalaman. Layanan yang kami sediakan meliputi : Pelayanan Klinik Umum, Pelayanan Gigi dan Mulut, KB, Injeksi Vitamin, Imunisasi, Nebulizer (UAP), Vaksinasi, Pemeriksaan Kehamilan Dasar ,Home Care, Telekonsultasi via WhatsApp ,Antrean Online" },
+    { nama:"Rumah Sakit Ciputra",         tipe:"Rumah Sakit",  rating:4.9, jarak:2000,   daerah:"Jakarta", waktu:"Sen-Sab, 08:00-16:00",alamat:"Jl. Boulevard Blok G1 Citra 5", img:"ciputra hospital.jpeg",   deskripsi:"Rumah Sakit ini memiliki layanan unggulan Trauma Center terutama untuk kasus kecelakaan kerja dan kecelakaan lalulintas, Uro-Nephrology Center (pusat layanan urologi dan gagal ginjal), Cardiology Center (pusat layanan jantung dan pembuluh darah), Neurology Center (pusat layanan saraf), dan Opthalmology Center (Pusat layanan Mata dan Retina)."},
+    { nama:"Klinik Pelita",               tipe:"Klinik",       rating:4.3, jarak:600,    daerah:"Jakarta", waktu:"Sen-Sab, 10;00 - 21:00",alamat:"JL. KH. Moh. Mansyur No 28c",   img:"klinik pelita.jpeg",      deskripsi:"Klinik ini menyediakan layanan poli umum, kebidanan, gigi, laboratorium, dan skin care dengan jadwal dan tarif yang berbeda untuk setiap layanannya." },
+    { nama:"Rumah Sakit Pondok Indah",    tipe:"Rumah Sakit",  rating:4.0, jarak:900,    daerah:"Jakarta", waktu:"Sen-Jum, 9:00 - 21:00",alamat:"JL. Metro Duta Kav.",           img:"RS-Pondok-Indah.jpg",     deskripsi:"Pondok Indah merupakan rumah sakit swasta modern pertama di Indonesia yang ditunjang sistem digital hospital terintegrasi. Pelayanan kesehatan yang diberikan didukung dengan kehadiran para dokter spesialis dan sub-spesialis untuk menangani permasalahan kesehatan yang sangat spesifik serta kelengkapan teknologi medis terkini." },
+    { nama:"Rumah Sakit Hermina Pasteur", tipe:"Rumah Sakit",  rating:5.0, jarak:155000, daerah:"Bandung", waktu:"Sen-Sab, 9:00 - 17:00",alamat:"JL. Dr. Djunjunan No. 107",     img:"rs-hermina-pasteur.webp", deskripsi:" RS Hermina Pasteur merupakan Rumah Sakit yang khusus melayani ibu dan anak (RSIA)."},
+    { nama:"Klinik Mutiara Cikutra",      tipe:"Klinik",       rating:4.5, jarak:160000, daerah:"Bandung", waktu:"Sen-Jum, 08:00-14:00",alamat:"JL. Cikutra No. 115",           img:"mutiara-cikutra.jpg",     deskripsi:"Klinik Mutiara Cikutra didirikan dengan sebuah visi untuk menjadi tempat pelayanan kesehatan yang prima dengan pengobatan cepat dan tepat disertai pendekatan moral dan nurani namun dengan biaya yang kompetitif."},
+    { nama:"Klinik Medika",               tipe:"Klinik",       rating:4.7, jarak:48000,  daerah:"Bogor",   waktu:"Sel-Sab, 08:00-15:00",alamat:"JL. Durian Raya No. 63",        img:"medica klinik.jpg",       deskripsi:"merupakan sebuah klinik kesehatan yang menawarkan berbagai layanan medis seperti USG 4Dimensi, persalinan dengan kehadiran bidan selama 24 jam,"},
+  ];
+
+  function formatJarak(m) {
+    return m >= 1000 ? (m / 1000).toFixed(1) + " km" : m + " m";
+  }
+
+  function bukaDetail(i) {
+    const f = fasilitasData[i];
+    document.getElementById('m-img').src = f.img;
+    document.getElementById('m-img').alt = f.nama;
+    document.getElementById('m-nama').textContent = f.nama;
+    document.getElementById('m-tipe').textContent = f.tipe;
+    document.getElementById('m-daerah').textContent = f.daerah;
+    document.getElementById('m-waktu').textContent = f.waktu;
+    document.getElementById('m-alamat').textContent = f.alamat;
+    document.getElementById('m-jarak').textContent = formatJarak(f.jarak);
+    document.getElementById('m-rating').textContent = f.rating.toFixed(1);
+    document.getElementById('m-deskripsi').textContent = f.deskripsi;
+    const link = document.getElementById('m-link');
+    if (f.link) {
+      link.href = f.link;
+      link.style.display = 'block';
+    } else {
+      link.style.display = 'none';
+    }
+    document.getElementById('overlay-detail').classList.add('show');
+  }
+
+  function tutup(id) { document.getElementById(id).classList.remove('show'); }
+
+  document.getElementById('overlay-detail').addEventListener('click', function(e) {
+    if (e.target === this) tutup('overlay-detail');
+  });
+
+  // Search / filter / sort
+  const allCards = Array.from(document.querySelectorAll('.fasilitas'));
+
+  function doSearch() {
+    const query    = document.getElementById('search-input').value.toLowerCase().trim();
+    const sortVal  = document.getElementById('filter-sort').value;
+    const tipeVal  = document.getElementById('filter-tipe').value;
+    const daerahVal= document.getElementById('filter-daerah').value;
+
+    let visible = allCards.filter(card => {
+      const matchText  = !query || card.dataset.nama.includes(query) || card.dataset.alamat.includes(query) || card.dataset.daerah.toLowerCase().includes(query);
+      const matchTipe  = tipeVal   === 'semua' || card.dataset.tipe   === tipeVal;
+      const matchDaerah= daerahVal === 'semua' || card.dataset.daerah === daerahVal;
+      return matchText && matchTipe && matchDaerah;
+    });
+
+    if (sortVal === 'terdekat') visible.sort((a,b) => +a.dataset.jarak  - +b.dataset.jarak);
+    else if (sortVal === 'terbaik') visible.sort((a,b) => +b.dataset.rating - +a.dataset.rating);
+
+    const group = document.querySelector('.fasilitas-group');
+    allCards.forEach(c => c.classList.add('hidden'));
+
+    if (visible.length === 0) {
+      document.getElementById('no-result').classList.add('visible');
+    } else {
+      document.getElementById('no-result').classList.remove('visible');
+      visible.forEach(card => { card.classList.remove('hidden'); group.appendChild(card); });
+    }
+  }
+
+  document.getElementById('search-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doSearch();
+  });
+</script>
+</body>
+</html>

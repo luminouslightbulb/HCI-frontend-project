@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEDTEX - Symptom Checker</title>
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      font-family: Arial, sans-serif; 
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 70px;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1dbf73;
+    }
+
+    #pfp {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    /* Layout Kontainer Utama */
+    .container {
+      display: flex;
+    }
+
+    .sidebar{ 
+  width:240px; 
+  height:calc(100vh - 70px); 
+  background:white; 
+  padding:25px; 
+  box-shadow:2px 0 5px rgba(0,0,0,0.03); 
+}
+
+    .menu {
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .menu:hover {
+      background: #1dbf73;
+    }
+    
+    .menu:hover .sidebar-link {
+      color: white !important;
+    }
+
+    .menu.active {
+      background: #1dbf73;
+    }
+    
+    .menu.active .sidebar-link {
+      color: white !important;
+    }
+
+    .sidebar-link {
+      color: black;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .sidebar-link img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    /* Area Konten Utama */
+    .main {
+      flex: 1;
+      padding: 35px;
+    }
+
+    .checker-layout {
+      display: flex;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .symptom-card {
+      flex: 1.2;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .symptom-group {
+      margin-bottom: 25px;
+    }
+
+    .group-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 12px;
+      border-left: 4px solid #1dbf73;
+      padding-left: 10px;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      background: #f8faf9;
+      padding: 12px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid #edf2f0;
+      font-size: 14px;
+      transition: 0.2s;
+      user-select: none;
+    }
+
+    .checkbox-label:hover {
+      background: #eef9f3;
+      border-color: #1dbf73;
+    }
+
+    .checkbox-label input {
+      margin-right: 12px;
+      accent-color: #1dbf73;
+      width: 16px;
+      height: 16px;
+    }
+
+    .checkbox-label.checked {
+      background: #1dbf73;
+      color: white;
+      border-color: #1dbf73;
+    }
+
+    .result-card {
+      flex: 0.8;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+    }
+
+    .result-placeholder {
+      color: #999;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .doctor-recommendation {
+      display: none; /* Tersembunyi di awal sampai ada keluhan yang dipilih */
+    }
+
+    .spec-tag {
+      display: inline-block;
+      background: #eef9f3;
+      color: #1dbf73;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #cceee0;
+      width: 100%;
+      text-align: center;
+    }
+
+    .action-box {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #edf2f0;
+    }
+
+    .btn-action {
+      display: block;
+      width: 100%;
+      background: #1dbf73;
+      color: white;
+      text-align: center;
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .btn-action:hover {
+      background: #18a966;
+    }
+    .icon-caridokter{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-dashboard{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-booking{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-chat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-riwayat{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-fasilitas{
+      width:35;
+      height:35px;
+      padding-left:10px;
+    }
+    .icon-checker{
+      width:30;
+      height:30px;
+      padding-left:10px;
+    }
+    #sidebar-text{
+      color:black;
+      text-decoration:none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">MEDTEX</div>
+    <div><img src="profile-icon-9.png" alt="pfp" id="pfp">User</div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+    <div class="menu"><a href="main_page.html" id="sidebar-text">Dashboard<img src="dashboard.png" alt="Dashboard" class="icon-dashboard"></a></div>
+    <div class="menu"><a href="cariDokter.html" id="sidebar-text">Cari Dokter <img src="magnifying_glass.png" alt="caridokter" class="icon-caridokter"></a></div>
+    <div class="menu"><a href="booking.html" id="sidebar-text">Booking<img src="booking.png" alt="booking" class="icon-booking"></a></div>
+    <div class="menu"><a href="chat.html" id="sidebar-text">Chat<img src="chat.png" alt="chat" class="icon-chat"></a></div>
+    <div class="menu"><a href="Riwayat.html" id="sidebar-text">Riwayat<img src="riwayat.png" alt="riwayat" class="icon-riwayat"></a></div>
+    <div class="menu"><a href="fasilitas.html" id="sidebar-text">Fasilitas<img src="fasilitas.png" alt="fasilitas" class="icon-fasilitas"></a></div>
+    <div class="menu active"><a href="symptom checker.html" id="sidebar-text">symptom checker<img src="checker.png" alt="symptom" class="icon-checker"></a></div>
+    <div class="menu"><a href="bantuan.html" id="sidebar-text">Bantuan<img src="question-mark.png" alt="symptom" class="icon-checker"></a></div>
+
+  </div>
+
+    <div class="main">
+      <div style="font-size: 28px; font-weight: bold; margin-bottom: 5px;">Symptom Checker</div>
+      <p style="color: #777; margin-bottom: 25px;">Centang keluhan fisik yang Anda rasakan untuk mendapatkan rekomendasi spesialis secara instan.</p>
+
+      <div class="checker-layout">
+        
+        <div class="symptom-card">
+          
+          <div class="symptom-group">
+            <div class="group-title">Sistem Saraf & Kepala</div>
+            <div class="checkbox-grid">
+              <label class="checkbox-label"><input type="checkbox" value="Saraf" onchange="processSymptoms(this)">Pusing / Vertigo</label>
+              <label class="checkbox-label"><input type="checkbox" value="Saraf" onchange="processSymptoms(this)">Migren Parah</label>
+              <label class="checkbox-label"><input type="checkbox" value="Saraf" onchange="processSymptoms(this)">Kejang Otot</label>
+            </div>
+          </div>
+
+          <div class="symptom-group">
+            <div class="group-title">Kulit & Alergi</div>
+            <div class="checkbox-grid">
+              <label class="checkbox-label"><input type="checkbox" value="Kulit" onchange="processSymptoms(this)">Bintik Merah</label>
+              <label class="checkbox-label"><input type="checkbox" value="Kulit" onchange="processSymptoms(this)">Gatal / Ruam</label>
+              <label class="checkbox-label"><input type="checkbox" value="Kulit" onchange="processSymptoms(this)">Kulit Melepuh</label>
+            </div>
+          </div>
+
+          <div class="symptom-group">
+            <div class="group-title">Pencernaan & Perut</div>
+            <div class="checkbox-grid">
+              <label class="checkbox-label"><input type="checkbox" value="Pencernaan" onchange="processSymptoms(this)">Nyeri Ulu Hati</label>
+              <label class="checkbox-label"><input type="checkbox" value="Pencernaan" onchange="processSymptoms(this)">Mual / Muntah</label>
+              <label class="checkbox-label"><input type="checkbox" value="Pencernaan" onchange="processSymptoms(this)">Diare Akut</label>
+            </div>
+          </div>
+
+          <div class="symptom-group">
+            <div class="group-title">Dada & Pernapasan</div>
+            <div class="checkbox-grid">
+              <label class="checkbox-label"><input type="checkbox" value="Jantung" onchange="processSymptoms(this)">Nyeri Dada</label>
+              <label class="checkbox-label"><input type="checkbox" value="Jantung" onchange="processSymptoms(this)">Sesak Napas</label>
+              <label class="checkbox-label"><input type="checkbox" value="Jantung" onchange="processSymptoms(this)">Jantung Berdebar</label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="result-card">
+          <div style="font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #333;">Hasil Analisis Medtex</div>
+          
+          <div id="placeholder" class="result-placeholder">
+            Belum ada gejala yang dipilih.<br>Silakan centang keluhan Anda pada panel kiri.
+          </div>
+
+          <div id="recommendation-box" class="doctor-recommendation">
+            <p style="font-size: 14px; color: #666; margin-bottom: 12px;">Berdasarkan kombinasi keluhan Anda, sistem merekomendasikan:</p>
+            
+            <div id="specialist-tags"></div>
+
+            <div class="action-box">
+              <a href="cariDokter.html" class="btn-action">Cari Dokter Spesialis</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function processSymptoms(inputElement) {
+
+      const label = inputElement.parentElement;
+      if (inputElement.checked) {
+        label.classList.add('checked');
+      } else {
+        label.classList.remove('checked');
+      }
+
+      const checkedBoxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]:checked');
+      const placeholder = document.getElementById('placeholder');
+      const recBox = document.getElementById('recommendation-box');
+      const tagsContainer = document.getElementById('specialist-tags');
+
+      // Jika tidak ada keluhan yang dicentang, kembalikan ke tampilan kosong
+      if (checkedBoxes.length === 0) {
+        placeholder.style.display = 'block';
+        recBox.style.display = 'none';
+        return;
+      }
+
+      let specialists = new Set();
+      
+      checkedBoxes.forEach(box => {
+        if (box.value === "Saraf") specialists.add("Spesialis Saraf (Neurologi)");
+        if (box.value === "Kulit") specialists.add("Spesialis Kulit & Kelamin (Dermatologi)");
+        if (box.value === "Pencernaan") specialists.add("Spesialis Penyakit Dalam (Gastroenterologi)");
+        if (box.value === "Jantung") specialists.add("Spesialis Jantung (Kardiologi)");
+      });
+
+      tagsContainer.innerHTML = '';
+      specialists.forEach(spec => {
+        const tag = document.createElement('div');
+        tag.className = 'spec-tag';
+        tag.innerText = spec;
+        tagsContainer.appendChild(tag);
+      });
+
+      placeholder.style.display = 'none';
+      recBox.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
